@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "custom.jwt.secret-key",
+      "type": "java.lang.String",
+      "description": "The secret key that we use to sign the token."
+    },
+    {
+      "name": "custom.jwt.access-token-expired",
+      "type": "java.lang.String",
+      "description": "Expired time (minutes) for access token."
+    },
+    {
+      "name": "custom.jwt.refresh-token-expired",
+      "type": "java.lang.String",
+      "description": "Expired time (minutes) for refresh token."
+    }
+  ]
+}

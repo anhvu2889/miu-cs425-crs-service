@@ -1,0 +1,8 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=car-rental-system'
+      - 'MYSQL_ROOT_PASSWORD=123456'
+    ports:
+      - '3306:3306'
