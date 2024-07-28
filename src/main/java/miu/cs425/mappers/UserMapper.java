@@ -3,7 +3,6 @@ package miu.cs425.mappers;
 import miu.cs425.dtos.UserDto;
 import miu.cs425.models.User;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +16,8 @@ public class UserMapper {
     private ModelMapper modelMapper;
 
     public UserDto toUserDto(User user) {
-        modelMapper.addMappings(new PropertyMap<UserDto, User>() {
-            @Override
-            protected void configure() {
-                skip(destination.getPassword());
-            }
+        modelMapper.typeMap(User.class, UserDto.class).addMappings(mapper -> {
+            mapper.skip(UserDto::setPassword);
         });
         return modelMapper.map(user, UserDto.class);
     }
