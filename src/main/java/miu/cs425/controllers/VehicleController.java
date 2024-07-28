@@ -1,5 +1,8 @@
 package miu.cs425.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import miu.cs425.models.Car;
 import miu.cs425.services.ICarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,13 @@ public class VehicleController {
 
     @Autowired
     private ICarService carService;
-    @PostMapping("/add")
+
+    @Operation(summary = "Add new car")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created car successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request")
+    })
+    @PostMapping()
     public ResponseEntity<Car> addCar (@RequestBody Car car){
         Car newCar = carService.saveCar(car);
         return new ResponseEntity<>(newCar, HttpStatus.CREATED);
