@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -17,6 +18,7 @@ public class VehicleController {
 
     @Autowired
     private ICarService carService;
+
     @Operation(summary = "Add new car")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created car successfully"),
@@ -36,6 +38,9 @@ public class VehicleController {
     @GetMapping()
     public ResponseEntity<List<Car>> getAllCars (){
         List<Car> cars = carService.getAllCars();
+        if (cars.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 }
