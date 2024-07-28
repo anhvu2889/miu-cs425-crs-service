@@ -40,8 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeHttp -> {
                             authorizeHttp.requestMatchers("/api/pub/authenticate").permitAll();
-                            authorizeHttp.requestMatchers("/actuator/**").permitAll();
-                            authorizeHttp.requestMatchers("/api/v1/users/**", "/api/v1/vehicles/**").hasAnyRole(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode());
+                            authorizeHttp.requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll();
+                            authorizeHttp.requestMatchers("/api/v1/users/**", "/api/v1/vehicles/**").hasAnyAuthority(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode());
                             authorizeHttp.anyRequest().authenticated();
                         }
                 )

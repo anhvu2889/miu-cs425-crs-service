@@ -1,5 +1,6 @@
 package miu.cs425.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
     private Long userId;

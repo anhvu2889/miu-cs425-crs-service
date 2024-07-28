@@ -14,6 +14,11 @@
       "name": "custom.jwt.refresh-token-expired",
       "type": "java.lang.String",
       "description": "Expired time (minutes) for refresh token."
+    },
+    {
+      "name": "spring.springdoc.swagger-ui.enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.springdoc.swagger-ui.enabled."
     }
   ]
 }
