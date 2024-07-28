@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -43,11 +42,9 @@ public class UserService implements IUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isPresent()) {
-            return new UserDetailsImpl(user.get());
-        }
-        throw new UsernameNotFoundException("User not found with username: " + username);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        List<Role> roles = roleRepository.findRolesByUserName(username);
+        return new UserDetailsImpl(user, roles);
     }
 
     @Override

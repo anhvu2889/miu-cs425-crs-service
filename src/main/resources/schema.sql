@@ -37,6 +37,21 @@ CREATE TABLE `roles`
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles`
+    DISABLE KEYS */;
+INSERT INTO `roles`
+VALUES (4, 'SUPER_ADMIN', 'Super Admin'),
+       (5, 'ADMIN', 'Admin'),
+       (6, 'USER', 'User');
+/*!40000 ALTER TABLE `roles`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_roles`
 --
 
@@ -47,11 +62,28 @@ CREATE TABLE `user_roles`
 (
     `user_id` int NOT NULL,
     `role_id` int NOT NULL,
-    PRIMARY KEY (`user_id`, `role_id`)
+    PRIMARY KEY (`user_id`, `role_id`),
+    KEY `role_id_pk_idx` (`role_id`),
+    CONSTRAINT `role_id_pk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
+    CONSTRAINT `user_id_pk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+LOCK TABLES `user_roles` WRITE;
+/*!40000 ALTER TABLE `user_roles`
+    DISABLE KEYS */;
+INSERT INTO `user_roles`
+VALUES (3, 5),
+       (4, 4);
+/*!40000 ALTER TABLE `user_roles`
+    ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -80,6 +112,21 @@ CREATE TABLE `users`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users`
+    DISABLE KEYS */;
+INSERT INTO `users`
+VALUES (3, 'admin', '$2a$10$4zu5oGYmEHgUTK8b5vcOgegsd8.99Ex0x3amg7.TOqSFyqgYQgcyy', 'Admin', 'Admin', 'admin@miu.edu',
+        'Fairfield, Iowa', '[641]-244-1234', '2024-07-26 16:26:29', '2024-07-26 16:26:30'),
+       (4, 'superadmin', '$2a$10$IQsAnGA1ZcKDVLSM2fo5u.kznCwhBrN1RPmfScjGxIznHki50jPN2', 'Super Admin', '',
+        'superadmin@miu.edu', 'Fairfield, Iowa', '[641]-244-1235', '2024-07-26 16:31:11', '2024-07-26 16:31:11');
+/*!40000 ALTER TABLE `users`
+    ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `cars`
@@ -117,4 +164,4 @@ CREATE TABLE `cars`
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-26 21:25:38
+-- Dump completed on 2024-07-27 21:55:29

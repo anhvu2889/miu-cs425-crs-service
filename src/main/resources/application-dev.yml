@@ -9,11 +9,18 @@ spring:
     url: jdbc:mysql://localhost:3307/car-rental-system?useSSL=false
     username: root
     password: 123456
+  jpa:
+    show-sql: true
 
   docker:
     compose:
       enabled: false
       file: docker-compose.yaml
+
+  springdoc:
+    swagger-ui:
+      enabled: true
+
 custom:
   jwt:
     secret-key: 5367566B59703373367639792F423F4528482B4D6251655468576D5A7

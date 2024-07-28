@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import miu.cs425.configurations.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtils {
@@ -26,21 +29,33 @@ public class JwtTokenUtils {
     @Value("${custom.jwt.refresh-token-expired}")
     private Integer refreshTokenExpiredTime;
 
-    public String generateAccessToken(UserDetails userDetails) {
+    public String generateAccessToken(UserDetailsImpl userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails, accessTokenExpiredTime);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
+    public String generateRefreshToken(UserDetailsImpl userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails, refreshTokenExpiredTime);
     }
 
-    private String createToken(Map<String, Object> claims, UserDetails userDetails, Integer timeValidity) {
+    private String createToken(Map<String, Object> claims, UserDetailsImpl userDetails, Integer timeValidity) {
+        claims.put("userId", userDetails.getUserId());
         claims.put("username", userDetails.getUsername());
+        claims.put("email", userDetails.getEmail());
+        claims.put("firstname", userDetails.getFirstname());
+        claims.put("lastname", userDetails.getLastname());
+        claims.put("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         claims.put("sub", userDetails.getUsername());
+
         Date expiredTime = new Date(System.currentTimeMillis() + timeValidity * 60 * 1000);
-        return Jwts.builder().claims(claims).subject(userDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis())).expiration(expiredTime).signWith(getSigningKey(), Jwts.SIG.HS256).compact();
+        return Jwts.builder()
+                .claims(claims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(expiredTime)
+                .signWith(getSigningKey(), Jwts.SIG.HS256)
+                .compact();
     }
 
     public String extractUsername(String token) {
