@@ -6,6 +6,8 @@ import miu.cs425.services.ICarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CarService implements ICarService {
 
@@ -14,5 +16,9 @@ public class CarService implements ICarService {
     @Override
     public Car saveCar(Car car) {
         return carRepository.save(car);
+    }
+    @Override
+    public List<Car> getAllCars(){
+        return carRepository.findAll();
     }
 }
