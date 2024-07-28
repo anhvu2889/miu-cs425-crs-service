@@ -38,7 +38,7 @@ public class VehicleController {
     @GetMapping()
     public ResponseEntity<List<Car>> getAllCars (){
         List<Car> cars = carService.getAllCars();
-        if (cars.isEmpty()) {
+        if(cars.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(cars, HttpStatus.OK);
