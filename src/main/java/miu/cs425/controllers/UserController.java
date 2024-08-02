@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import miu.cs425.dtos.UserDto;
+import miu.cs425.dtos.requests.DynamicFilterSortRequest;
 import miu.cs425.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,20 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Retrieve all users by filters, sort and paging")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return list users with paging"),
+            @ApiResponse(responseCode = "204", description = "There is empty users")
+    })
+    @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<UserDto>> getUsersByFilter(@RequestBody DynamicFilterSortRequest dynamicFilterSortRequest) {
+        Page<UserDto> userDtoPage = userService.getUsersByFilter(dynamicFilterSortRequest);
+        if (userDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userDtoPage, HttpStatus.OK);
     }
 
     @Operation(summary = "Add new user")

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import miu.cs425.configurations.security.UserDetailsImpl;
 import miu.cs425.constants.enums.RoleEnum;
 import miu.cs425.dtos.UserDto;
+import miu.cs425.dtos.requests.DynamicFilterSortRequest;
 import miu.cs425.mappers.UserMapper;
 import miu.cs425.models.Role;
 import miu.cs425.models.User;
@@ -13,7 +14,7 @@ import miu.cs425.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,8 +50,15 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        Page<User> users = userRepository.findAll(PageRequest.of(0, 20));
-        return userMapper.toUserDtos(users.getContent());
+        List<User> users = userRepository.findAll();
+        return userMapper.toUserDtos(users);
+    }
+
+    @Override
+    public Page<UserDto> getUsersByFilter(DynamicFilterSortRequest dynamicFilterSortRequest) {
+        Result<User> result = filterAndSort(dynamicFilterSortRequest);
+        Page<User> userPage = userRepository.findAll(result.filter(), result.pageable());
+        return new PageImpl<>(userMapper.toUserDtos(userPage.getContent()), userPage.getPageable(), userPage.getTotalElements());
     }
 
     @Override
