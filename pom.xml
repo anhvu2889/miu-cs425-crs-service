@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>miu.cs425</groupId>
-    <artifactId>car-rental-system</artifactId>
+    <artifactId>vehicle-rental-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>CarRentalSystem</name>
     <description>CS425 - Final project - Car rental system</description>

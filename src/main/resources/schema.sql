@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
--- Host: localhost    Database: car-rental-system
+-- Host: localhost    Database: vehicle-rental-system
 -- ------------------------------------------------------
 -- Server version	8.0.21
 
@@ -128,12 +128,12 @@ VALUES (3, 'admin', '$2a$10$4zu5oGYmEHgUTK8b5vcOgegsd8.99Ex0x3amg7.TOqSFyqgYQgcy
     ENABLE KEYS */;
 UNLOCK TABLES;
 --
--- Table structure for table `cars`
+-- Table structure for table `vehicles`
 --
-DROP TABLE IF EXISTS `cars`;
+DROP TABLE IF EXISTS `vehicles`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cars`
+CREATE TABLE `vehicles`
 (
     `car_id`               int NOT NULL AUTO_INCREMENT,
     `make`                  varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE `cars`
   COLLATE = utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
--- Dumping routines for database 'car-rental-system'
+-- Dumping routines for database 'vehicle-rental-system'
 --
 /*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
