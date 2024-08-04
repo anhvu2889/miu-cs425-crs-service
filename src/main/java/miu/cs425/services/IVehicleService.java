@@ -11,4 +11,10 @@ public interface IVehicleService extends IGenericService<Vehicle>{
 
     List<Vehicle> getAllVehicles();
     Page<Vehicle> getVehiclesByFilter(DynamicFilterSortRequest dynamicFilterSortRequest);
+
+    Vehicle getVehicleById(Long id);
+
+    Vehicle updateVehicle(Vehicle vehicle);
+
+    void deleteVehicleById(Long id);
 }

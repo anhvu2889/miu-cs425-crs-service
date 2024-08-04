@@ -141,7 +141,7 @@ CREATE TABLE `vehicles`
     `year`                  int DEFAULT NULL,
     `license_plate_number`  varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
     `rental_price`          float NOT NULL,
-    `is_available`          boolean DEFAULT NULL,
+    `available_status`      varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
     PRIMARY KEY (`vehicle_id`),
     UNIQUE KEY `licensePlateNumber_UNIQUE` (`license_plate_number`)
 ) ENGINE = InnoDB

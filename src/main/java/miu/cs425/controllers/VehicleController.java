@@ -3,6 +3,8 @@ package miu.cs425.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
+import miu.cs425.dtos.UserDto;
 import miu.cs425.dtos.requests.DynamicFilterSortRequest;
 import miu.cs425.models.Vehicle;
 import miu.cs425.services.IVehicleService;
@@ -59,5 +61,45 @@ public class VehicleController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(vehiclePage, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Update vehicle by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Updated vehicle successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request"),
+            @ApiResponse(responseCode = "404", description = "Not found vehicle")
+    })
+    @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vehicle> createVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        try {
+            vehicle.setVehicleId(id);
+            return new ResponseEntity<>(vehicleService.updateVehicle(vehicle), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Operation(summary = "Delete vehicle by Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deleted vehicle successfully"),
+            @ApiResponse(responseCode = "404", description = "Not found vehicle"),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
+        try {
+            vehicleService.deleteVehicleById(id);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get vehicle by Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get vehicle information")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
+        return new ResponseEntity<>(vehicleService.getVehicleById(id), HttpStatus.OK);
     }
 }
