@@ -14,9 +14,11 @@ public interface IUserService extends UserDetailsService, IGenericService<User> 
 
     Page<UserDto> getUsersByFilter(DynamicFilterSortRequest dynamicFilterSortRequest);
 
-    UserDto getUserById(int id);
+    UserDto getUserById(Long id);
 
     UserDto updateUser(UserDto userDto);
 
     UserDto saveUser(UserDto userDto);
+
+    void deleteUser(Long id);
 }

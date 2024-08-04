@@ -11,6 +11,7 @@ import miu.cs425.models.User;
 import miu.cs425.repositories.IRoleRepository;
 import miu.cs425.repositories.IUserRepository;
 import miu.cs425.services.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,8 +63,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto getUserById(int id) {
-        return null;
+    public UserDto getUserById(Long id) {
+        return userRepository.findById(id).map(userMapper::toUserDto).orElse(null);
     }
 
     @Override
@@ -80,7 +81,35 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto user) {
-        return null;
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        userRepository.delete(user);
+    }
+
+    @Override
+    public UserDto updateUser(UserDto userDto) {
+        User user = userRepository.findById(userDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getUserId()));
+        if (StringUtils.isNotEmpty(userDto.getFirstname())) {
+            user.setFirstname(userDto.getFirstname());
+        }
+
+        if (StringUtils.isNotEmpty(userDto.getLastname())) {
+            user.setLastname(userDto.getLastname());
+        }
+
+        if (StringUtils.isNotEmpty(userDto.getEmail())) {
+            user.setEmail(userDto.getEmail());
+        }
+
+        if (StringUtils.isNotEmpty(userDto.getPhone())) {
+            user.setPhone(userDto.getPhone());
+        }
+
+        if (StringUtils.isNotEmpty(userDto.getAddress())) {
+            user.setAddress(userDto.getAddress());
+        }
+
+        User savedUser = userRepository.save(user);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 }
