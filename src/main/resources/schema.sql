@@ -135,14 +135,14 @@ DROP TABLE IF EXISTS `vehicles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vehicles`
 (
-    `car_id`               int NOT NULL AUTO_INCREMENT,
+    `vehicle_id`               int NOT NULL AUTO_INCREMENT,
     `make`                  varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci  NOT NULL,
     `model`                 varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     `year`                  int DEFAULT NULL,
     `license_plate_number`  varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
     `rental_price`          float NOT NULL,
     `is_available`          boolean DEFAULT NULL,
-    PRIMARY KEY (`car_id`),
+    PRIMARY KEY (`vehicle_id`),
     UNIQUE KEY `licensePlateNumber_UNIQUE` (`license_plate_number`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
