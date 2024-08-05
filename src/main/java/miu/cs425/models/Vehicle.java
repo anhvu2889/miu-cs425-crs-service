@@ -30,6 +30,6 @@ public class Vehicle {
     @Column(name = "rental_price")
     private Double rentalPrice;
 
-    @Column(name = "is_available")
-    private Boolean isAvailable;
+    @Column(name = "available_status")
+    private String availableStatus;
 }
