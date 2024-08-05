@@ -18,8 +18,13 @@ public class UserMapper {
     public UserDto toUserDto(User user) {
         modelMapper.typeMap(User.class, UserDto.class).addMappings(mapper -> {
             mapper.skip(UserDto::setPassword);
+            mapper.skip(UserDto::setRoles);
         });
-        return modelMapper.map(user, UserDto.class);
+
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        List<Long> roles = user.getRoles().stream().map(e -> e.getRole().getRoleId()).toList();
+        userDto.setRoles(roles);
+        return userDto;
     }
 
     public List<UserDto> toUserDtos(List<User> users) {
@@ -28,5 +33,12 @@ public class UserMapper {
             userDtos.add(toUserDto(user));
         }
         return userDtos;
+    }
+
+    public User toUser(UserDto userDto) {
+        modelMapper.typeMap(UserDto.class, User.class).addMappings(mapper -> {
+            mapper.skip(User::setRoles);
+        });
+        return modelMapper.map(userDto, User.class);
     }
 }

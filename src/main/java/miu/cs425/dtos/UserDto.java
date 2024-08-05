@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -32,4 +33,6 @@ public class UserDto {
     private Date createdAt;
 
     private Date updatedAt;
+
+    private List<Long> roles;
 }
