@@ -15,14 +15,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+  springdoc:
+    swagger-ui:
+      enabled: true
+
   docker:
     compose:
       enabled: false
       file: docker-compose.yaml
-
-  springdoc:
-    swagger-ui:
-      enabled: true
 
 custom:
   jwt:
