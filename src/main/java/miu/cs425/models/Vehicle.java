@@ -32,4 +32,7 @@ public class Vehicle {
 
     @Column(name = "available_status")
     private String availableStatus;
+
+    @Column(name = "image")
+    private String image;
 }
