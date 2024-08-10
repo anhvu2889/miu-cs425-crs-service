@@ -51,7 +51,7 @@ public class SecurityConfig {
                             authorizeHttp.requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll();
                             authorizeHttp.requestMatchers("/api/v1/users/**").hasAnyAuthority(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode());
                             authorizeHttp.requestMatchers("/api/v1/vehicles/**").hasAnyAuthority(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode(), RoleEnum.USER.getCode());
-                            authorizeHttp.requestMatchers("/api/v1/reservations/**").hasAnyAuthority(RoleEnum.USER.getCode());
+                            authorizeHttp.requestMatchers("/api/v1/reservations/**").hasAnyAuthority(RoleEnum.USER.getCode(), RoleEnum.SUPER_ADMIN.getCode());
                             authorizeHttp.anyRequest().authenticated();
                         }
                 )
