@@ -1,8 +1,30 @@
 services:
+  api-service:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - crs-system-network
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/car-rental-system?allowPublicKeyRetrieval=true
+    depends_on:
+      - mysql
+
+    volumes:
+      - .m2:/root/.m2
+  
   mysql:
     image: 'mysql:latest'
+    restart: always
+    ports:
+      - '3306:3306'
+    networks:
+      - crs-system-network
     environment:
       - 'MYSQL_DATABASE=car-rental-system'
       - 'MYSQL_ROOT_PASSWORD=123456'
-    ports:
-      - '3306:3306'
+
+networks:
+  crs-system-network:
+
