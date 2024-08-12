@@ -60,4 +60,14 @@ public class ReservationController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Get reservation by user Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get reservation information")
+    })
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Reservation>> getReservationsByUserId(@PathVariable Long id) {
+        List<Reservation> reservationsByUserId = reservationService.findReservationByUserId(id);
+        return new ResponseEntity<>(reservationsByUserId, HttpStatus.OK);
+    }
 }
