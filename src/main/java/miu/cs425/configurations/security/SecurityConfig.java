@@ -47,7 +47,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeHttp -> {
-                            authorizeHttp.requestMatchers("/api/pub/authenticate").permitAll();
+                            authorizeHttp.requestMatchers("/api/pub/**").permitAll();
                             authorizeHttp.requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll();
                             authorizeHttp.requestMatchers("/api/v1/users/**").hasAnyAuthority(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode());
                             authorizeHttp.requestMatchers("/api/v1/vehicles/**").hasAnyAuthority(RoleEnum.SUPER_ADMIN.getCode(), RoleEnum.ADMIN.getCode(), RoleEnum.USER.getCode());
