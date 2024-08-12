@@ -20,5 +20,7 @@ public interface IUserService extends UserDetailsService, IGenericService<User> 
 
     UserDto saveUser(UserDto userDto);
 
+    UserDto signupUser(UserDto userDto);
+
     void deleteUser(Long id);
 }

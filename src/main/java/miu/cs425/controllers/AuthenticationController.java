@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import miu.cs425.configurations.security.UserDetailsImpl;
 import miu.cs425.constants.enums.TokenTypeEnum;
 import miu.cs425.dtos.JwtTokenDto;
+import miu.cs425.dtos.UserDto;
 import miu.cs425.dtos.requests.AuthRequest;
+import miu.cs425.services.IUserService;
 import miu.cs425.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +18,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class AuthenticationController {
     private JwtTokenUtils jwtTokenUtils;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private IUserService userService;
 
     @Operation(summary = "Basic authentication")
     @ApiResponses(value = {
@@ -65,5 +66,15 @@ public class AuthenticationController {
         }
 
         throw new UsernameNotFoundException("Invalid username or password.");
+    }
+
+    @Operation(summary = "Sign up user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Sign up user successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request")
+    })
+    @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(userService.signupUser(userDto), HttpStatus.CREATED);
     }
 }

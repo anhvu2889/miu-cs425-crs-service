@@ -1,7 +1,9 @@
 package miu.cs425.services.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import miu.cs425.configurations.security.UserDetailsImpl;
+import miu.cs425.constants.enums.RoleEnum;
 import miu.cs425.dtos.UserDto;
 import miu.cs425.dtos.requests.DynamicFilterSortRequest;
 import miu.cs425.mappers.UserMapper;
@@ -83,6 +85,11 @@ public class UserService implements IUserService {
     @Transactional
     @Override
     public UserDto saveUser(UserDto userDto) {
+        Optional<User> existingUser = userRepository.findByUsername(userDto.getUsername());
+        if (existingUser.isPresent()) {
+            throw new ConstraintViolationException("Username is existing", null);
+        }
+        
         User user = userMapper.toUser(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(new Date());
@@ -91,6 +98,28 @@ public class UserService implements IUserService {
 
         List<Role> roles = roleRepository.findAllById(userDto.getRoles());
         Set<UserRole> userRoles = roles.stream().map(r -> new UserRole(savedUser, r)).collect(Collectors.toSet());
+        userRoleRepository.saveAll(userRoles);
+
+        return modelMapper.map(savedUser, UserDto.class);
+    }
+
+    @Transactional
+    @Override
+    public UserDto signupUser(UserDto userDto) {
+        Optional<User> existingUser = userRepository.findByUsername(userDto.getUsername());
+        if (existingUser.isPresent()) {
+            throw new ConstraintViolationException("Username is existing", null);
+        }
+
+        User user = userMapper.toUser(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
+        User savedUser = userRepository.save(user);
+
+        Role roles = roleRepository.findByRoleName(RoleEnum.USER.getCode()).orElseThrow(() -> new EntityNotFoundException("Role is not found"));
+        Set<UserRole> userRoles = new HashSet<>();
+        userRoles.add(new UserRole(savedUser, roles));
         userRoleRepository.saveAll(userRoles);
 
         return modelMapper.map(savedUser, UserDto.class);
