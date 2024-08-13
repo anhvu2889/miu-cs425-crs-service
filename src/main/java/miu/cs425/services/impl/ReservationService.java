@@ -32,4 +32,9 @@ public class ReservationService implements IReservationService {
         reservationRepository.delete(reservation);
     }
 
+    @Override
+    public List<Reservation> findReservationByUserId(Long userId) {
+        return reservationRepository.findReservationByUserId(userId);
+    }
+
 }
