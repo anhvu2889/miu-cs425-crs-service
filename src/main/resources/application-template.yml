@@ -4,9 +4,9 @@ spring:
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: <DB_URL>
-    username: <DB_USERNAME>
-    password: <DB_PASSWORD>
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   springdoc:
     swagger-ui:
@@ -19,6 +19,6 @@ spring:
 
 custom:
   jwt:
-    secret-key: <JWT_SECRETKEY>
+    secret-key: ${JWT_SECRETKEY}
     access-token-expired: 30
     refresh-token-expired: 60
