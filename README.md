@@ -1,41 +1,72 @@
-# Getting Started
+# Car Rental System - Backend Service
 
-### Reference Documentation
+## Overview
+The **Car Rental System (CRS)** backend service is a Spring Boot application designed to handle car rental operations. It provides RESTful APIs for managing cars, customers, reservations, and rentals. Built with Spring Data JPA for database interaction and secured using Spring Security.
 
-For further reference, please consider the following sections:
+---
 
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.3.2/maven-plugin/reference/html/)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#using.devtools)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#web)
-* [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#features.docker-compose)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#web.security)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.3.2/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
+## Features
+- Manage cars, customers, and reservations.
+- Handle rental transactions including pickup and return.
+- Generate rental invoices and reports.
+- Role-based authentication and authorization.
+- RESTful APIs for seamless integration with front-end systems.
 
-### Docker Compose support
+---
 
-This project contains a Docker Compose file named `docker-compose.yaml`.
-In this file, the following services have been defined:
+## Technologies
+- **Spring Boot** - Application framework.
+- **Spring Data JPA** - Database interaction.
+- **Spring Security** - Authentication and authorization.
+- **H2 Database** - In-memory database for development.
+- **Swagger** - API documentation.
 
-* mysql: [`mysql:latest`](https://hub.docker.com/_/mysql)
+---
 
-Please review the tags of the used images and set them to the same as you're running in production.
+## Prerequisites
+- **Java 11** or higher.
+- **Maven** - Build and dependency management tool.
+- IDE like IntelliJ IDEA or Eclipse.
 
-### How to setup the environment
+---
 
-* Install JDK 17
-* Install Maven 3.9.8
-* Install Docker 27.0.3
-* Install MySQL
-    * DB script: `schema.sql`
+## Getting Started
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/anhvu2889/miu-cs425-crs-service
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd miu-cs425-crs-service
+   ```
+3. Build and run the application:
+   ```bash
+   mvn spring-boot:run
+   ```
+4. Access the APIs via Swagger UI:
+   ```
+   http://localhost:8080/swagger-ui.html
+   ```
 
-### How to launch the application
+---
 
-* Run `CarRentalSystemApplication.java` file in IntelliJ
-* Or you also run application by these command line:
-    * Run with `dev` profile: `mvn spring-boot:run -Pdev -Dspring-boot.run.profiles=dev`
-    * Run with `docker-compose`
-      profile: `mvn spring-boot:run -Pdocker-compose -Dspring-boot.run.profiles=docker-compose`
+## API Endpoints
+- **/api/cars** - Manage car records.
+- **/api/customers** - Manage customer data.
+- **/api/reservations** - Create and manage reservations.
+- **/api/rentals** - Handle rental transactions.
 
-### Swagger UI
+---
 
-* http://localhost:8080/swagger-ui/index.html
+## Contributing
+Contributions are welcome! Follow these steps:
+1. Fork the repository.
+2. Create a new branch.
+3. Commit your changes.
+4. Submit a pull request.
+
+---
+
+## Contact
+For questions or suggestions, create an issue in the repository or reach out to the course instructor.
+
