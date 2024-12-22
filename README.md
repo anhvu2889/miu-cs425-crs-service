@@ -1,4 +1,8 @@
-# Car Rental System - Backend Service
+# MIU - SWE Final Project: Car Rental System - Backend Service
+
+This repository contains the backend service for the **SWE (Software Engineering)** final project, part of the graduate Computer Science program at **Maharishi International University (MIU)**.
+
+---
 
 ## Overview
 The **Car Rental System (CRS)** backend service is a Spring Boot application designed to handle car rental operations. It provides RESTful APIs for managing cars, customers, reservations, and rentals. Built with Spring Data JPA for database interaction and secured using Spring Security.
@@ -64,9 +68,3 @@ Contributions are welcome! Follow these steps:
 2. Create a new branch.
 3. Commit your changes.
 4. Submit a pull request.
-
----
-
-## Contact
-For questions or suggestions, create an issue in the repository or reach out to the course instructor.
-
